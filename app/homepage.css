@@ -1,0 +1,97 @@
+@import "tailwindcss";
+:root {
+  --main-background-color: #ffe4c4 
+  
+}
+.main_page {
+  background-color: var(--main-background-color);
+  width: 100%;
+  min-height: 100vh;
+  margin: 0%;
+  
+}
+
+.fixed_title {
+  position: fixed;
+  font-weight: bold; 
+  font-size: 2.0rem; 
+  color:rgb(116, 143, 17);
+  top: 70px; 
+  left: 50%;
+  transform: translateX(-50%)
+}
+
+.student_no{
+  position: fixed;
+  font-weight: 600;
+  font-size: 22px;
+  color: rgb(116, 143, 17);
+  top: 22px;
+  right: 20px;
+  transform: translate(-20%);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px; 
+    background-color: #5fd10d; 
+    color: rgb(53, 13, 13); 
+    text-align: center; 
+    line-height: 40px; 
+    font-size: 16px; 
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2); 
+}
+
+.footer_content {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+}
+
+.footer_content p {
+    margin: 0;
+    font-size: 16px;
+    white-space: nowrap; 
+}
+
+:root {
+  --bg: #ffffff;
+  --text: #0f172a;         
+  --muted-text: #475569;   
+  --border: #e2e8f0;       
+  --link: #2563eb;         
+  --button-bg: #e5e7eb;    
+  --button-text: #111827;  
+}
+
+html[data-theme="dark"] {
+  --bg: #0b1220;           
+  --text: #e5e7eb;        
+  --muted-text: #cbd5e1;  
+  --card: #111827;         
+  --border: #334155;      
+  --link: #60a5fa;         
+  --button-bg: #374151;    
+  --button-text: #f9fafb;  
+}
+
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+
+a { color: var(--link); }
+
+
+.main_page { background: var(--bg); color: var(--text); }
+.section, .card, .panel { background: var(--card); color: var(--text); border-color: var(--border); }
+
+
+.border { border-color: var(--border); }
+.text-muted { color: var(--muted-text); }

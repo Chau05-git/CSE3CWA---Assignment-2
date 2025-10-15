@@ -1,0 +1,117 @@
+.code-container {
+  position: fixed;
+  top: 250px;
+  right: 50px;
+  width: 40%;
+  background: rgb(152, 192, 53); 
+  border-radius: 8px;
+  padding: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.code-header h3 {
+  color: #333;  
+  margin: 0;
+}
+
+.code-content {
+  background: rgba(255, 255, 255, 0.9);  
+  padding: 15px;
+  border-radius: 4px;
+  height: 400px;  
+  overflow-y: auto;  
+}
+
+.code-content pre {
+  margin: 0;
+}
+
+.code-content code {
+  color: #333;  
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+.code-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.code-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+}
+
+.code-content::-webkit-scrollbar-thumb {
+  background: rgb(152, 192, 53);
+  border-radius: 4px;
+}
+
+.copy-button {
+    background: none;
+    border: 2px solid #dcaf18;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin: 0 15px;
+}
+
+.copy-button:hover {
+    transform: translateY(-4px);
+    background-color: rgba(255,255,255,0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.copy-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #e0cc15;
+    transition: width 0.3s ease;
+}
+
+.copy-button:hover::after {
+    width: 100%;
+}
+
+.code-container {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.code-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.copy-button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--border);
+}
+
+.code-content {
+  background: var(--bg);
+  color: var(--text);
+  border-top: 1px solid var(--border);
+}
+
+.code-content pre, .code-content code {
+  color: var(--text);
+}
