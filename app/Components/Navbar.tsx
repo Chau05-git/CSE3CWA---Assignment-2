@@ -46,24 +46,13 @@ const Navbar = () => {
       <ul className="nav_list">
         <li className="nav_item"><Link href="/">Home</Link></li>
         <li className="nav_item"><Link href="#pre-lab">Pre-lab Question</Link></li>
-        <li className="nav_item"><Link href="#services">Escape room</Link></li>
+        <li className="nav_item"><Link href="/EscapeRoom">Escape room</Link></li>
         <li className="nav_item"><Link href="#contact">Coding races</Link></li>
       </ul>
       <ul className="about_n_hamburger">
         <li className="about"><Link href="#about">about</Link></li>
 
-        {/* New: Theme toggle button */}
-        <li className="theme_toggle">
-          <button
-            type="button"
-            className="theme_toggle_btn"
-            onClick={toggleTheme}
-            aria-label="Toggle dark/light mode"
-            title="Toggle dark/light mode"
-          >
-            {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
-          </button>
-        </li>
+        
 
         <li className="hamburger_menu">
           <div className="hamburger_icon" onClick={handleHamburgerClick}>
@@ -78,7 +67,7 @@ const Navbar = () => {
           <ul>
             <li><Link href="/">Home</Link></li>
             <li><Link href="#about">About</Link></li>
-            <li><Link href="#services">Escape room</Link></li>
+            <li><Link href="/EscapeRoom">Escape room</Link></li>
             <li><Link href="#contact">Coding races</Link></li>
           </ul>
         </div>
