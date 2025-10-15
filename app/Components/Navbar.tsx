@@ -45,12 +45,12 @@ const Navbar = () => {
     <nav className="navbar">
       <ul className="nav_list">
         <li className="nav_item"><Link href="/">Home</Link></li>
-        <li className="nav_item"><Link href="#about">Pre-lab Question</Link></li>
+        <li className="nav_item"><Link href="#pre-lab">Pre-lab Question</Link></li>
         <li className="nav_item"><Link href="#services">Escape room</Link></li>
         <li className="nav_item"><Link href="#contact">Coding races</Link></li>
       </ul>
       <ul className="about_n_hamburger">
-        <li className="about"><Link href="/about">about</Link></li>
+        <li className="about"><Link href="#about">about</Link></li>
 
         {/* New: Theme toggle button */}
         <li className="theme_toggle">
@@ -77,7 +77,7 @@ const Navbar = () => {
         <div className="hamburger_dropdown">
           <ul>
             <li><Link href="/">Home</Link></li>
-            <li><Link href="/about">About</Link></li>
+            <li><Link href="#about">About</Link></li>
             <li><Link href="#services">Escape room</Link></li>
             <li><Link href="#contact">Coding races</Link></li>
           </ul>
