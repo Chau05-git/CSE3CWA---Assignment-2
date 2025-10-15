@@ -1,14 +1,15 @@
 import Link from "next/link";
 import "./esc-room.css";
 
-const EscapeRoomPage = () => {
+export default function EscapeRoomPage() {
     return (
         <main className="escape-room-page">
-            <h1>Escape Room</h1>
-            <p>Welcome to the Escape Room challenge!</p>
+            <div className ="Headline">
+                <p> Escape Room challenge!</p>
+            </div>
+            
             <Link href="/">Go back to Home</Link>
         </main>
     );
 }
 
-export default EscapeRoomPage;
