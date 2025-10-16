@@ -1,0 +1,105 @@
+.Time_style {
+  position: absolute;
+  top: 95px;
+  right: 150px;
+  text-align: center;
+  margin: 16px auto;
+  background: rgba(42, 36, 105, 0.9);
+  padding: 16px;
+  border-radius: 12px;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.timer-title {
+  margin: 0 0 12px 0;
+  color: #11c49a;
+  font-size: 20px;
+}
+
+.timer-display {
+  font-family: monospace;
+  font-size: 48px;
+  font-weight: bold;
+  color: #a21283;
+  margin: 12px 0;
+}
+
+.timer-display.warning {
+  color: #dc2626;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.timer-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  background-color: #333c4e;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* Start button */
+.startButton {
+  padding: 10px 20px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.startButton:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+}
+
+/* Pause button */
+.pauseButton {
+  padding: 10px 20px;
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.pauseButton:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.4);
+}
+
+/* Reset button */
+.resetButton {
+  padding: 10px 20px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.resetButton:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+}
+
+.startButton:active,
+.pauseButton:active,
+.resetButton:active {
+  transform: translateY(0);
+}

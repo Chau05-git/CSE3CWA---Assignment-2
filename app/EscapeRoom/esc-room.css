@@ -1,6 +1,6 @@
 
 .escape-room-page {
-  background: url("/Bug-room.png") no-repeat center center fixed;
+  background: url("/Bug-room.png") ;
   background-color: aliceblue;
   color: #f2e424;
   min-height: 100vh;
@@ -15,6 +15,6 @@
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
-    top: 16px;
+    top: 50px;
     right: 22%;
 }
