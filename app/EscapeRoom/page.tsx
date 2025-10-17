@@ -16,9 +16,14 @@ export default function EscapeRoomPage() {
   const [timerKey, setTimerKey] = useState(0);
 
   const handleGameStart = () => {
-    setGameState("playing");
-    setCurrentStage(1); // ✅ Bắt đầu từ stage 1
-  };
+  setGameState(prev => {
+    if (prev === "idle") {
+      setCurrentStage(1);      // chỉ set khi bắt đầu từ idle
+      return "playing";
+    }
+    return prev;               // resume (pause -> start) giữ nguyên stage
+  });
+};
 
   const handleChallengeComplete = () => {
     // ✅ THÊM logic chuyển stage
