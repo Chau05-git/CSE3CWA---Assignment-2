@@ -1,7 +1,7 @@
 .Time_style {
   position: absolute;
   top: 95px;
-  right: 150px;
+  right: 410px;
   text-align: center;
   margin: 16px auto;
   background: rgba(42, 36, 105, 0.9);
@@ -9,20 +9,20 @@
   border-radius: 12px;
   max-width: 400px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s ease; /* Thêm animation khi di chuyển */
+  transition: all 0.4s ease; 
 }
 
-/* Timer khi đang chơi - nằm góc trên phải của challenge */
+
 .Time_style.playing {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 1100; /* Cao hơn challenge overlay */
+  z-index: 1100; 
   max-width: 280px;
   padding: 12px;
 }
 
-/* Thu nhỏ timer khi đang chơi */
+
 .Time_style.playing .timer-title {
   font-size: 16px;
   margin: 0 0 8px 0;

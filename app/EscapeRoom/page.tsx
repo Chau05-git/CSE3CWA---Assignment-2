@@ -80,8 +80,8 @@ export default function EscapeRoomPage() {
       )}
 
       {gameState === "idle" && (
-        <div style={{ textAlign: "center", marginTop: 24 }}>
-          <Link href="/" style={{ color: "#f2e424", fontSize: 18 }}>
+        <div className="returnHome" >
+          <Link href="/" >
             ← Go back to Home
           </Link>
         </div>

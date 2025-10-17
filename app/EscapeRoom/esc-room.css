@@ -1,5 +1,6 @@
 
 .escape-room-page {
+  position: relative;
   background: url("/Bug-room.png") ;
   background-color: aliceblue;
   color: #f2e424;
@@ -17,4 +18,12 @@
     margin-bottom: 20px;
     top: 50px;
     right: 22%;
+}
+
+.returnHome{
+    text-align: left;
+    margin-top: 24px;
+    margin-left: 45px;
+    color: #f2e424;
+    font-size: 18px;
 }
