@@ -1,14 +1,16 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import "./EscTimer_style.css"; // import CSS file
+import "./EscTimer_style.css";
 
 type Props = {
   initialSeconds: number;
   onExpire?: () => void;
   autoStart?: boolean;
+  onStart?: () => void;
+  isPlaying?: boolean; 
 };
 
-export default function EscTimer({ initialSeconds, onExpire, autoStart = true }: Props) {
+export default function EscTimer({ initialSeconds, onExpire, autoStart = false, onStart, isPlaying = false }: Props) {
   const [remaining, setRemaining] = useState(initialSeconds);
   const [running, setRunning] = useState(autoStart);
   const intervalRef = useRef<number | null>(null);
@@ -34,15 +36,18 @@ export default function EscTimer({ initialSeconds, onExpire, autoStart = true }:
   const start = () => {
     if (remaining <= 0) setRemaining(initialSeconds);
     setRunning(true);
+    onStart?.();
   };
+
   const pause = () => setRunning(false);
+
   const reset = () => {
     setRunning(false);
     setRemaining(initialSeconds);
   };
 
   return (
-    <div className="Time_style">
+    <div className={`Time_style ${isPlaying ? 'playing' : ''}`}> 
       <h3 className="timer-title">⏱️ Time Remaining</h3>
       <div className={`timer-display ${remaining < 60 ? 'warning' : ''}`}>
         {mm}:{ss}
