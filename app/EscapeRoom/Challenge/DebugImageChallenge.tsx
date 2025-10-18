@@ -20,9 +20,32 @@ export default function DebugImageChallenge({ onComplete }: Props) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
 
-  const handleImageClick = useCallback((imageId: string) => {
+  const handleImageClick = useCallback(async (imageId: string) => {
     const image = images.find((img) => img.id === imageId);
     setSelectedImage(imageId);
+
+    // Try server-side validation first; fallback to local logic
+    try {
+      const res = await fetch("/api/validate/debug", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ selectedId: imageId }),
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const data = json?.data;
+        if (data?.correct) {
+          setError("");
+          setTimeout(() => onComplete(), 800);
+          return;
+        } else {
+          setError(data?.message || `❌ Wrong! "${image?.label}" is not used for debugging.`);
+          return;
+        }
+      }
+    } catch {
+      // Silent fallback below
+    }
 
     if (image?.isCorrect) {
       setError("");

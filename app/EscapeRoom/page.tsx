@@ -9,10 +9,11 @@ import GameResult from "./GameResult/GameResult";
 
 type GameState = "idle" | "playing" | "win" | "lose";
 
-// Important: keep public behavior the same; only optimize and harden state updates.
+// keep public behavior the same; only optimize and harden state updates.
 type ChallengeProps = { onComplete: () => void };
 
-// Lazy-load challenges to reduce initial bundle size (no behavior change)
+// Lazy-load challenges to reduce initial bundle size (no behavior change) 
+// (This one i ask chatgpt to do it for optimising the code i will load only necessary part first instead of loading all at once - It not change any logic of my code)
 const SumChallenge = dynamic<ChallengeProps>(() => import("./Challenge/SumChallenge"));
 const DataPortChallenge = dynamic<ChallengeProps>(() => import("./Challenge/DataPortChallenge"));
 const DebugImageChallenge = dynamic<ChallengeProps>(() => import("./Challenge/DebugImageChallenge"));

@@ -37,7 +37,7 @@ console.log("Saved data:", saved);
     city: "NYC"
   };
 
-  const handleRunCode = () => {
+  const handleRunCode = async () => {
     setError("");
     setOutput("");
     
@@ -56,6 +56,36 @@ console.log("Saved data:", saved);
         eval(code);
       } finally {
         console.log = originalLog;
+      }
+
+      // Try server-side validation first; fallback locally if it fails
+      try {
+        const saved = localStorage.getItem("userData");
+        const res = await fetch("/api/validate/code", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ stage: 2, code, output: saved }),
+        });
+        if (res.ok) {
+          const json = await res.json();
+          const data = json?.data;
+          if (data?.correct) {
+            setOutput(`✅ Perfect! Data saved to localStorage successfully!\n\nSaved data:\n${JSON.stringify(data.actualData, null, 2)}\n\n✨ Your code works correctly!`);
+            setTimeout(() => {
+              localStorage.removeItem("userData"); // Cleanup
+              onComplete();
+            }, 1500);
+            return; // stop on successful API validation
+          } else {
+            if (data?.actualData) {
+              setOutput(`Saved data:\n${JSON.stringify(data.actualData, null, 2)}`);
+            }
+            setError(data?.message || "❌ Data saved but values are wrong!");
+            return;
+          }
+        }
+      } catch {
+        // Silent fallback to local validation
       }
 
       // CHỈ KIỂM TRA localStorage, KHÔNG QUAN TÂM TÊN BIẾN

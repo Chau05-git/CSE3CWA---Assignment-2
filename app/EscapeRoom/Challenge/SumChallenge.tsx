@@ -21,7 +21,7 @@ console.log(sum);
   
   const correctAnswer = 55;
 
-  const handleRunCode = () => {
+  const handleRunCode = async () => {
     setError("");
     setOutput("");
     
@@ -38,13 +38,39 @@ console.log(sum);
       } finally {
         console.log = originalLog;
       }
+
+      // Try server-side validation first; fallback locally if it fails
+      try {
+        const res = await fetch("/api/validate/code", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ stage: 1, code, output: capturedOutput }),
+        });
+        if (res.ok) {
+          const json = await res.json();
+          const data = json?.data;
+          if (data?.correct) {
+            setOutput(`✅ Correct! The answer is ${correctAnswer}\n\n✨ Your code works perfectly!`);
+            setTimeout(() => {
+              onComplete();
+            }, 1500);
+            return; // stop on successful API validation
+          } else {
+            const actual = data?.actualOutput ?? "no output";
+            setError(`❌ Wrong answer! You got ${actual}, expected ${correctAnswer}\n\nHint: 0+1+2+3+4+5+6+7+8+9+10 = ?`);
+            return;
+          }
+        }
+      } catch {
+        // Silent fallback to local validation
+      }
       
       // Lấy tất cả số được in ra
       const numbers = capturedOutput.trim().split('\n')
         .map(line => parseInt(line.trim()))
         .filter(num => !isNaN(num));
       
-      // Kiểm tra có số 55 trong output không (không quan tâm tên biến)
+      // Local fallback: check if 55 exists in output (variable name agnostic)
       if (numbers.includes(correctAnswer)) {
         setOutput(`✅ Correct! The answer is ${correctAnswer}\n\n✨ Your code works perfectly!`);
         setTimeout(() => {
