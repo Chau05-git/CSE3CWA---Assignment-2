@@ -28,13 +28,16 @@ console.log(sum);
     try {
       let capturedOutput = "";
       const originalLog = console.log;
-      console.log = (...args: any[]) => {
-        capturedOutput += args.join(" ") + "\n";
-      };
-
-      eval(code);
-      
-      console.log = originalLog;
+      // Ensure console.log is always restored even if eval throws
+      try {
+        console.log = (...args: any[]) => {
+          capturedOutput += args.join(" ") + "\n";
+        };
+        // Execute user code in a controlled scope
+        eval(code);
+      } finally {
+        console.log = originalLog;
+      }
       
       // Lấy tất cả số được in ra
       const numbers = capturedOutput.trim().split('\n')

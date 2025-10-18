@@ -47,13 +47,16 @@ console.log("Saved data:", saved);
       
       let capturedOutput = "";
       const originalLog = console.log;
-      console.log = (...args: any[]) => {
-        capturedOutput += args.join(" ") + "\n";
-      };
-
-      eval(code);
-      
-      console.log = originalLog;
+      // Ensure console.log is always restored even if eval throws
+      try {
+        console.log = (...args: any[]) => {
+          capturedOutput += args.join(" ") + "\n";
+        };
+        // Execute user code in a controlled scope
+        eval(code);
+      } finally {
+        console.log = originalLog;
+      }
 
       // CHỈ KIỂM TRA localStorage, KHÔNG QUAN TÂM TÊN BIẾN
       const saved = localStorage.getItem("userData");

@@ -1,25 +1,26 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "./Challenge.css";
 
 type Props = {
   onComplete: () => void;
 };
 
+// Hoist static data to avoid re-creating on each render
+const images = [
+  { id: "console", emoji: "🖥️", label: "Console", isCorrect: false },
+  { id: "bug", emoji: "🐛", label: "Bug Icon", isCorrect: true }, // ✅ Correct answers
+  { id: "play", emoji: "▶️", label: "Play Button", isCorrect: false },
+  { id: "save", emoji: "💾", label: "Save Icon", isCorrect: false },
+  { id: "terminal", emoji: "⌨️", label: "Terminal", isCorrect: false },
+  { id: "breakpoint", emoji: "🔴", label: "Breakpoint", isCorrect: true }, // ✅ Correct answers
+];
+
 export default function DebugImageChallenge({ onComplete }: Props) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
 
-  const images = [
-    { id: "console", emoji: "🖥️", label: "Console", isCorrect: false },
-    { id: "bug", emoji: "🐛", label: "Bug Icon", isCorrect: true }, // ✅ Đáp án đúng
-    { id: "play", emoji: "▶️", label: "Play Button", isCorrect: false },
-    { id: "save", emoji: "💾", label: "Save Icon", isCorrect: false },
-    { id: "terminal", emoji: "⌨️", label: "Terminal", isCorrect: false },
-    { id: "breakpoint", emoji: "🔴", label: "Breakpoint", isCorrect: true }, // ✅ Đáp án đúng
-  ];
-
-  const handleImageClick = (imageId: string) => {
+  const handleImageClick = useCallback((imageId: string) => {
     const image = images.find((img) => img.id === imageId);
     setSelectedImage(imageId);
 
@@ -31,7 +32,7 @@ export default function DebugImageChallenge({ onComplete }: Props) {
     } else {
       setError(`❌ Wrong! "${image?.label}" is not used for debugging.`);
     }
-  };
+  }, [onComplete]);
 
   return (
     <div className="challenge-overlay">

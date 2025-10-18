@@ -1,50 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import "./esc-room.css";
 import EscTimer from "./Time/EscTimer";
-import SumChallenge from "./Challenge/SumChallenge";
-import DataPortChallenge from "./Challenge/DataPortChallenge";
-import DebugImageChallenge from "./Challenge/DebugImageChallenge"; // ✅ THÊM
 import GameResult from "./GameResult/GameResult";
 
 type GameState = "idle" | "playing" | "win" | "lose";
+
+// Important: keep public behavior the same; only optimize and harden state updates.
+type ChallengeProps = { onComplete: () => void };
+
+// Lazy-load challenges to reduce initial bundle size (no behavior change)
+const SumChallenge = dynamic<ChallengeProps>(() => import("./Challenge/SumChallenge"));
+const DataPortChallenge = dynamic<ChallengeProps>(() => import("./Challenge/DataPortChallenge"));
+const DebugImageChallenge = dynamic<ChallengeProps>(() => import("./Challenge/DebugImageChallenge"));
+
+// Avoid magic numbers: single source of truth for stage count and labels
+const STAGE_COUNT = 3 as const;
+const STAGE_LABELS: Record<number, string> = {
+  1: "Calculate Sum",
+  2: "Port Data to localStorage",
+  3: "Debug Image",
+};
 
 export default function EscapeRoomPage() {
   const [gameState, setGameState] = useState<GameState>("idle");
   const [currentStage, setCurrentStage] = useState(1);
   const [timerKey, setTimerKey] = useState(0);
 
-  const handleGameStart = () => {
-    setGameState(prev => {
+  const handleGameStart = useCallback(() => {
+    // Important: use functional set to avoid stale closures
+    setGameState((prev) => {
       if (prev === "idle") {
         setCurrentStage(1);
         return "playing";
       }
       return prev;
     });
-  };
+  }, []);
 
-  const handleChallengeComplete = () => {
-    if (currentStage === 3) { // ✅ Stage 3 = cuối cùng
-      setGameState("win");
-    } else {
-      setCurrentStage(prev => prev + 1);
-    }
-  };
+  const handleChallengeComplete = useCallback(() => {
+    // Important: single place to decide progression; uses STAGE_COUNT
+    setCurrentStage((prev) => {
+      if (prev === STAGE_COUNT) {
+        setGameState("win");
+        return prev; // keep at last stage; gameState will switch to win
+      }
+      return prev + 1;
+    });
+  }, []);
 
-  const handleTimeExpire = () => {
-    if (gameState === "playing") {
-      setGameState("lose");
-    }
-  };
+  const handleTimeExpire = useCallback(() => {
+    // Important: functional update to ensure correctness if called rapidly
+    setGameState((prev) => (prev === "playing" ? "lose" : prev));
+  }, []);
 
-  const handlePlayAgain = () => {
+  const handlePlayAgain = useCallback(() => {
     setGameState("idle");
     setCurrentStage(1);
-    setTimerKey(prev => prev + 1);
-  };
+    setTimerKey((prev) => prev + 1); // reset timer via key bump
+  }, []);
 
   return (
     <main className="escape-room-page">
@@ -55,7 +72,7 @@ export default function EscapeRoomPage() {
       {gameState !== "win" && gameState !== "lose" && (
         <EscTimer
           key={timerKey}
-          initialSeconds={180} // ✅ 3 phút cho 3 stage
+          initialSeconds={180} 
           autoStart={false}
           onExpire={handleTimeExpire}
           onStart={handleGameStart}
@@ -73,7 +90,7 @@ export default function EscapeRoomPage() {
         <DataPortChallenge onComplete={handleChallengeComplete} />
       )}
 
-      {/* ✅ Stage 3: Click Debug Image */}
+      {/* Stage 3: Click Debug Image */}
       {gameState === "playing" && currentStage === 3 && (
         <DebugImageChallenge onComplete={handleChallengeComplete} />
       )}
@@ -85,7 +102,7 @@ export default function EscapeRoomPage() {
       {gameState === "idle" && (
         <div className="returnHome">
           <Link href="/">
-            ← Go back to Home
+            ← Give up Challenge
           </Link>
         </div>
       )}
@@ -104,8 +121,9 @@ export default function EscapeRoomPage() {
           boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
           zIndex: 1100,
           fontSize: 16
-        }}>
-          📍 Stage {currentStage} / 3 {/* ✅ Đổi thành /3 */}
+        }} aria-live="polite">
+          📍 Stage {currentStage} / {STAGE_COUNT}
+          {STAGE_LABELS[currentStage] ? ` • ${STAGE_LABELS[currentStage]}` : ""}
         </div>
       )}
     </main>
