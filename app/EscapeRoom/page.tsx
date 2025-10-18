@@ -5,34 +5,32 @@ import Link from "next/link";
 import "./esc-room.css";
 import EscTimer from "./Time/EscTimer";
 import SumChallenge from "./Challenge/SumChallenge";
-import DataPortChallenge from "./Challenge/DataPortChallenge"; // ✅ THÊM IMPORT
+import DataPortChallenge from "./Challenge/DataPortChallenge";
+import DebugImageChallenge from "./Challenge/DebugImageChallenge"; // ✅ THÊM
 import GameResult from "./GameResult/GameResult";
 
 type GameState = "idle" | "playing" | "win" | "lose";
 
 export default function EscapeRoomPage() {
   const [gameState, setGameState] = useState<GameState>("idle");
-  const [currentStage, setCurrentStage] = useState(1); // ✅ THÊM stage tracking
+  const [currentStage, setCurrentStage] = useState(1);
   const [timerKey, setTimerKey] = useState(0);
 
   const handleGameStart = () => {
-  setGameState(prev => {
-    if (prev === "idle") {
-      setCurrentStage(1);      // chỉ set khi bắt đầu từ idle
-      return "playing";
-    }
-    return prev;               // resume (pause -> start) giữ nguyên stage
-  });
-};
+    setGameState(prev => {
+      if (prev === "idle") {
+        setCurrentStage(1);
+        return "playing";
+      }
+      return prev;
+    });
+  };
 
   const handleChallengeComplete = () => {
-    // ✅ THÊM logic chuyển stage
-    if (currentStage === 2) {
-      // Hoàn thành stage 2 = thắng
+    if (currentStage === 3) { // ✅ Stage 3 = cuối cùng
       setGameState("win");
     } else {
-      // Chuyển sang stage 2
-      setCurrentStage(2);
+      setCurrentStage(prev => prev + 1);
     }
   };
 
@@ -44,7 +42,7 @@ export default function EscapeRoomPage() {
 
   const handlePlayAgain = () => {
     setGameState("idle");
-    setCurrentStage(1); // ✅ Reset về stage 1
+    setCurrentStage(1);
     setTimerKey(prev => prev + 1);
   };
 
@@ -57,7 +55,7 @@ export default function EscapeRoomPage() {
       {gameState !== "win" && gameState !== "lose" && (
         <EscTimer
           key={timerKey}
-          initialSeconds={120} // ✅ 2 phút cho 2 stage
+          initialSeconds={180} // ✅ 3 phút cho 3 stage
           autoStart={false}
           onExpire={handleTimeExpire}
           onStart={handleGameStart}
@@ -65,14 +63,19 @@ export default function EscapeRoomPage() {
         />
       )}
 
-      {/* ✅ Stage 1: Calculate Sum */}
+      {/* Stage 1: Calculate Sum */}
       {gameState === "playing" && currentStage === 1 && (
         <SumChallenge onComplete={handleChallengeComplete} />
       )}
 
-      {/* ✅ Stage 2: Port Data to localStorage */}
+      {/* Stage 2: Port Data to localStorage */}
       {gameState === "playing" && currentStage === 2 && (
         <DataPortChallenge onComplete={handleChallengeComplete} />
+      )}
+
+      {/* ✅ Stage 3: Click Debug Image */}
+      {gameState === "playing" && currentStage === 3 && (
+        <DebugImageChallenge onComplete={handleChallengeComplete} />
       )}
 
       {(gameState === "win" || gameState === "lose") && (
@@ -80,14 +83,14 @@ export default function EscapeRoomPage() {
       )}
 
       {gameState === "idle" && (
-        <div className="returnHome" >
-          <Link href="/" >
+        <div className="returnHome">
+          <Link href="/">
             ← Go back to Home
           </Link>
         </div>
       )}
 
-      {/* ✅ Progress indicator - hiện stage hiện tại */}
+      {/* Progress indicator */}
       {gameState === "playing" && (
         <div style={{
           position: "fixed",
@@ -102,7 +105,7 @@ export default function EscapeRoomPage() {
           zIndex: 1100,
           fontSize: 16
         }}>
-          📍 Stage {currentStage} / 2
+          📍 Stage {currentStage} / 3 {/* ✅ Đổi thành /3 */}
         </div>
       )}
     </main>
