@@ -6,10 +6,11 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { stage: string } }
+  { params }: { params: Promise<{ stage: string }> }
 ) {
   try {
-    const stageNum = parseInt(params.stage);
+    const { stage } = await params;
+    const stageNum = parseInt(stage);
 
     // Validate stage number
     if (isNaN(stageNum) || stageNum < 1 || stageNum > 3) {
