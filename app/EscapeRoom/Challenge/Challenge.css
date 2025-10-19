@@ -1,4 +1,4 @@
-/* Overlay - background popup */
+
 .challenge-overlay {
   position: fixed;
   top: 0;
@@ -19,7 +19,7 @@
   to { opacity: 1; }
 }
 
-/* Challenge container - box chính */
+
 .challenge-container {
   background: #1e293b;
   border-radius: 16px;

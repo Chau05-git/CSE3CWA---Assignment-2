@@ -65,7 +65,7 @@ console.log(sum);
         // Silent fallback to local validation
       }
       
-      // Lấy tất cả số được in ra
+      
       const numbers = capturedOutput.trim().split('\n')
         .map(line => parseInt(line.trim()))
         .filter(num => !isNaN(num));

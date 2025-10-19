@@ -9,11 +9,10 @@ type Props = {
 // Hoist static data to avoid re-creating on each render
 const images = [
   { id: "console", emoji: "🖥️", label: "Console", isCorrect: false },
-  { id: "bug", emoji: "🐛", label: "Bug Icon", isCorrect: true }, // ✅ Correct answers
-  { id: "play", emoji: "▶️", label: "Play Button", isCorrect: false },
+  { id: "bug", emoji: "🐛", label: "Bug Icon", isCorrect: true }, 
   { id: "save", emoji: "💾", label: "Save Icon", isCorrect: false },
   { id: "terminal", emoji: "⌨️", label: "Terminal", isCorrect: false },
-  { id: "breakpoint", emoji: "🔴", label: "Breakpoint", isCorrect: true }, // ✅ Correct answers
+  { id: "breakpoint", emoji: "🔴", label: "Breakpoint", isCorrect: true }, 
 ];
 
 export default function DebugImageChallenge({ onComplete }: Props) {

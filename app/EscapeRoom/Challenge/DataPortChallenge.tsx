@@ -42,7 +42,7 @@ console.log("Saved data:", saved);
     setOutput("");
     
     try {
-      // Clear localStorage trước
+      // Clear localStorage 
       localStorage.removeItem("userData");
       
       let capturedOutput = "";
@@ -88,7 +88,7 @@ console.log("Saved data:", saved);
         // Silent fallback to local validation
       }
 
-      // CHỈ KIỂM TRA localStorage, KHÔNG QUAN TÂM TÊN BIẾN
+      
       const saved = localStorage.getItem("userData");
       
       if (!saved) {
@@ -99,7 +99,7 @@ console.log("Saved data:", saved);
       try {
         const parsed = JSON.parse(saved);
         
-        // Kiểm tra từng property, không quan tâm thứ tự
+       
         const isCorrect = 
           parsed.name === expectedData.name &&
           parsed.age === expectedData.age &&
