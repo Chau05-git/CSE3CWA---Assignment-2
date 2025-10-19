@@ -135,29 +135,11 @@ console.log("Saved data:", saved);
           Save the user object to <strong>localStorage</strong> with key <code>"userData"</code>
         </p>
         <p className="hint">
-          💡 You can use any variable names you want! Just save the correct data.
+          💡 Hints:<br />
+          • Use <code>JSON.stringify()</code> to convert object to string<br />
+          • Use <code>localStorage.setItem(key, value)</code> to save data<br />
+          • The key must be exactly <code>"userData"</code>
         </p>
-
-        <div style={{ 
-          background: "rgba(59, 130, 246, 0.1)", 
-          border: "1px solid #3b82f6",
-          borderRadius: 8,
-          padding: 12,
-          marginBottom: 16,
-          color: "#93c5fd"
-        }}>
-          <strong>Example Solutions:</strong>
-          <pre style={{ margin: "8px 0 0 0", fontSize: 14 }}>{`// Option 1: With variable
-const userString = JSON.stringify(user);
-localStorage.setItem("userData", userString);
-
-// Option 2: Direct (1 line)
-localStorage.setItem("userData", JSON.stringify(user));
-
-// Option 3: Your own names
-const myData = JSON.stringify(user);
-localStorage.setItem("userData", myData);`}</pre>
-        </div>
 
         <div className="editor-section">
           <div className="editor-header">

@@ -95,37 +95,11 @@ console.log(sum);
           Calculate the sum of numbers from <strong>0 to 10</strong>
         </p>
         <p className="hint">
-          💡 You can use any variable names! Just print the correct result (55)
+          💡 Hints:<br />
+          • Use a <code>for</code> loop from 0 to 10<br />
+          • Add each number to your sum variable<br />
+          • Don't forget to print the result with <code>console.log()</code>
         </p>
-
-        <div style={{ 
-          background: "rgba(59, 130, 246, 0.1)", 
-          border: "1px solid #3b82f6",
-          borderRadius: 8,
-          padding: 12,
-          marginBottom: 16,
-          color: "#93c5fd"
-        }}>
-          <strong>Example Solutions:</strong>
-          <pre style={{ margin: "8px 0 0 0", fontSize: 14 }}>{`// Option 1: Using 'sum'
-for (let i = 0; i <= 10; i++) {
-  sum = sum + i;
-}
-
-// Option 2: Using 'total'
-let total = 0;
-for (let x = 0; x <= 10; x++) {
-  total += x;
-}
-console.log(total);
-
-// Option 3: Any names you like!
-let result = 0;
-for (let num = 0; num <= 10; num++) {
-  result = result + num;
-}
-console.log(result);`}</pre>
-        </div>
 
         <div className="editor-section">
           <div className="editor-header">
