@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import "./esc-room.css";
@@ -20,6 +20,7 @@ const DebugImageChallenge = dynamic<ChallengeProps>(() => import("./Challenge/De
 
 // Avoid magic numbers: single source of truth for stage count and labels
 const STAGE_COUNT = 3 as const;
+const TOTAL_TIME = 180; // 3 minutes in seconds
 const STAGE_LABELS: Record<number, string> = {
   1: "Calculate Sum",
   2: "Port Data to localStorage",
@@ -30,6 +31,8 @@ export default function EscapeRoomPage() {
   const [gameState, setGameState] = useState<GameState>("idle");
   const [currentStage, setCurrentStage] = useState(1);
   const [timerKey, setTimerKey] = useState(0);
+  const [completionTime, setCompletionTime] = useState<number>(0);
+  const getElapsedTime = useRef<(() => number) | null>(null);
 
   const handleGameStart = useCallback(() => {
     // Important: use functional set to avoid stale closures
@@ -46,6 +49,9 @@ export default function EscapeRoomPage() {
     // Important: single place to decide progression; uses STAGE_COUNT
     setCurrentStage((prev) => {
       if (prev === STAGE_COUNT) {
+        // Capture completion time when winning
+        const elapsed = getElapsedTime.current ? getElapsedTime.current() : 0;
+        setCompletionTime(elapsed);
         setGameState("win");
         return prev; // keep at last stage; gameState will switch to win
       }
@@ -61,6 +67,7 @@ export default function EscapeRoomPage() {
   const handlePlayAgain = useCallback(() => {
     setGameState("idle");
     setCurrentStage(1);
+    setCompletionTime(0);
     setTimerKey((prev) => prev + 1); // reset timer via key bump
   }, []);
 
@@ -73,11 +80,14 @@ export default function EscapeRoomPage() {
       {gameState !== "win" && gameState !== "lose" && (
         <EscTimer
           key={timerKey}
-          initialSeconds={180} 
+          initialSeconds={TOTAL_TIME} 
           autoStart={false}
           onExpire={handleTimeExpire}
           onStart={handleGameStart}
           isPlaying={gameState === "playing"}
+          onTimeRef={(getElapsed) => {
+            getElapsedTime.current = getElapsed;
+          }}
         />
       )}
 
@@ -97,7 +107,12 @@ export default function EscapeRoomPage() {
       )}
 
       {(gameState === "win" || gameState === "lose") && (
-        <GameResult isWin={gameState === "win"} onPlayAgain={handlePlayAgain} />
+        <GameResult 
+          isWin={gameState === "win"} 
+          onPlayAgain={handlePlayAgain}
+          completionTime={completionTime}
+          totalTime={TOTAL_TIME}
+        />
       )}
 
       {gameState === "idle" && (

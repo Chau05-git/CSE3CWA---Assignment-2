@@ -8,6 +8,7 @@ type Props = {
   autoStart?: boolean;
   onStart?: () => void;
   isPlaying?: boolean;
+  onTimeRef?: (getElapsed: () => number) => void; // callback to get elapsed time
 };
 
 export default function EscTimer({
@@ -16,11 +17,19 @@ export default function EscTimer({
   autoStart = false,
   onStart,
   isPlaying = false,
+  onTimeRef,
 }: Props) {
   const [remaining, setRemaining] = useState(initialSeconds);
   const [running, setRunning] = useState(autoStart);
   const intervalRef = useRef<number | null>(null);
   const hasFiredStart = useRef(false); // chặn gọi onStart nhiều lần trong 1 phiên
+
+  // Expose elapsed time calculation to parent
+  useEffect(() => {
+    if (onTimeRef) {
+      onTimeRef(() => initialSeconds - remaining);
+    }
+  }, [remaining, initialSeconds, onTimeRef]);
 
   // Tick mỗi giây khi running = true
   useEffect(() => {

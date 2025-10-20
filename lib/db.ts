@@ -8,6 +8,8 @@ declare global {
   var _itemModel: typeof Item | undefined;
   // eslint-disable-next-line no-var
   var _codeOutputModel: typeof CodeOutput | undefined;
+  // eslint-disable-next-line no-var
+  var _gameResultModel: typeof GameResult | undefined;
 }
 
 function getSequelize(): Sequelize {
@@ -35,6 +37,16 @@ export class CodeOutput extends Model<InferAttributes<CodeOutput>, InferCreation
   declare title: string;
   declare content: string;
   declare language: string | null;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+}
+
+export class GameResult extends Model<InferAttributes<GameResult>, InferCreationAttributes<GameResult>> {
+  declare id: CreationOptional<number>;
+  declare playerName: string | null;
+  declare status: string; // 'win' or 'lose'
+  declare completionTime: number | null; // seconds taken to complete (if won)
+  declare totalTime: number; // total time limit (e.g., 180 seconds)
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -76,12 +88,40 @@ function initCodeOutputModel() {
   return global._codeOutputModel;
 }
 
+function initGameResultModel() {
+  if (!global._gameResultModel) {
+    const sequelize = getSequelize();
+    GameResult.init(
+      {
+        id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+        playerName: { type: DataTypes.STRING, allowNull: true },
+        status: { type: DataTypes.STRING, allowNull: false },
+        completionTime: { type: DataTypes.INTEGER, allowNull: true },
+        totalTime: { type: DataTypes.INTEGER, allowNull: false },
+        createdAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+        updatedAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+      },
+      { sequelize, modelName: 'GameResult', tableName: 'GameResults' }
+    );
+    global._gameResultModel = GameResult;
+  }
+  return global._gameResultModel;
+}
+
 export async function ensureDb() {
   const sequelize = getSequelize();
   initItemModel();
   initCodeOutputModel();
+  initGameResultModel();
   await sequelize.authenticate();
   await sequelize.sync();
 }
 
-export { Item as ItemModel, initItemModel as getItemModel, CodeOutput as CodeOutputModel, initCodeOutputModel as getCodeOutputModel };
+export { 
+  Item as ItemModel, 
+  initItemModel as getItemModel, 
+  CodeOutput as CodeOutputModel, 
+  initCodeOutputModel as getCodeOutputModel,
+  GameResult as GameResultModel,
+  initGameResultModel as getGameResultModel
+};
