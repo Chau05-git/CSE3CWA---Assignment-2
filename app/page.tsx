@@ -104,7 +104,7 @@ const Footer = () => {
 export default async function Main_Page({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   
   const params = await searchParams;

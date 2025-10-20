@@ -3,21 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
     "next": "15.5.5",
+    "pg-hstore": "^2.3.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/sequelize": "^4.28.20",
+    "sequelize-cli": "^6.6.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
