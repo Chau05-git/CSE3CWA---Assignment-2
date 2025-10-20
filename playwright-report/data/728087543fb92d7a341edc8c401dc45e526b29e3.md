@@ -1,0 +1,49 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - heading "Welcome to my website" [level=1] [ref=e3]
+    - 'heading "Student No: 21654237" [level=2] [ref=e4]'
+    - navigation [ref=e5]:
+      - list [ref=e6]:
+        - listitem [ref=e7]:
+          - link "Home" [ref=e8] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e9]:
+          - link "Pre-lab Question" [ref=e10] [cursor=pointer]:
+            - /url: "#pre-lab"
+        - listitem [ref=e11]:
+          - link "Escape room" [ref=e12] [cursor=pointer]:
+            - /url: /EscapeRoom
+        - listitem [ref=e13]:
+          - link "Coding races" [ref=e14] [cursor=pointer]:
+            - /url: "#contact"
+      - list [ref=e15]:
+        - listitem [ref=e16]:
+          - link "about" [ref=e17] [cursor=pointer]:
+            - /url: "#about"
+        - listitem [ref=e18]
+    - generic [ref=e23]:
+      - heading "Tabs Header" [level=2] [ref=e24]
+      - tablist "Editor tabs" [ref=e25]:
+        - button "Add tab" [ref=e26] [cursor=pointer]: +
+      - generic [ref=e28]: No tab selected. Click + to add a tab.
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - heading "Source Code Output" [level=3] [ref=e31]
+        - generic [ref=e32]:
+          - link "Generate" [ref=e33] [cursor=pointer]:
+            - /url: "?gen=1"
+          - link "Clear" [ref=e34] [cursor=pointer]:
+            - /url: /
+          - button "Copy Code" [disabled] [ref=e35] [cursor=pointer]
+          - button "💾 Save to DB" [disabled] [ref=e36] [cursor=pointer]
+      - code [ref=e39]: /* press "Generate" to collect and display all .tsx source code files here */
+    - generic [ref=e41]:
+      - paragraph [ref=e42]: © 2025 All rights reserved
+      - paragraph [ref=e43]: "Student Name: Le Ngoc Minh Chau"
+      - paragraph [ref=e44]: "Student Number: 21654237"
+      - paragraph [ref=e45]: "Date: 10/20/2025"
+  - alert [ref=e46]
+```
