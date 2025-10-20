@@ -5,7 +5,8 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
-    const { getGameResultModel } = await import('@/lib/db');
+  // Use a relative import so the runtime resolves the module path correctly
+  const { getGameResultModel } = await import('../../../lib/db');
     const GameResult = getGameResultModel();
     
     const body = await req.json();
@@ -28,8 +29,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
     console.error('Error saving game result:', error);
+    // Return more info for debugging (temporary)
+    const message = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error && error.stack ? error.stack : undefined;
     return NextResponse.json(
-      { error: 'Failed to save game result' },
+      { error: 'Failed to save game result', message, stack },
       { status: 500 }
     );
   }
