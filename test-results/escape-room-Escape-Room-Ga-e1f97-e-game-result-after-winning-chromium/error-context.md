@@ -11,7 +11,7 @@
       - generic [ref=e10]:
         - textbox "Enter your name (optional)" [ref=e11]: E2E Test Player
         - button "💾 Save Result" [ref=e12] [cursor=pointer]
-        - paragraph [ref=e13]: "✓ Result saved! ID: 2"
+        - paragraph [ref=e13]: "✓ Result saved! ID: 9"
       - link "🏠 Back to Home" [ref=e15] [cursor=pointer]:
         - /url: /
   - alert [ref=e16]
